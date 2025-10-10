@@ -1,0 +1,131 @@
+
+/* Style for the background */
+body { 
+  background-color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+/* nav bar in header element */
+
+ a {
+  color: slateblue;
+  background-size: ;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 0px;
+  }
+
+a:hover {
+  color: white;
+}
+
+a:focus {
+  color: rgb(21, 255, 0);
+}
+
+nav a:hover, .active {
+  color: white;
+}
+
+/* Style for the title and subtitle */
+h1.title, p.subtitle {
+
+  color: green;
+  text-align: center;
+  margin-top: 40px;
+  text-shadow: 4px 4px 4px  slateblue;
+}
+
+/* Style for the title*/
+.to-home {
+  color: greenyellow;
+}
+
+.to-home:hover {
+  color: green;
+}
+/* Style for line height for the navigation pages*/
+li {
+  float: center;
+}
+/* Style for padding for the navigation pages*/
+li a {
+  padding: 20px;
+}
+/* Style for the navigation page names*/
+.icon {
+  float: center;
+  margin-right: 0px;
+    color: greenyellow;
+
+}
+
+.icon-content {
+  color: greenyellow;
+  margin-right: 0px;
+  margin-left: 0px;
+  padding-right: 30px;
+}
+
+.icon a {
+  padding: 40px;
+}
+
+hr {
+  margin-top: 0px;
+}
+
+/* Style for the logo(image) */
+.logo {
+  display: block;
+  margin: auto;
+  padding-top: 0px;
+  width: 350px;
+}
+
+/* Style for the box */
+.box { 
+  background-color: black;
+  color: greenyellow;
+  border: 10px solid greenyellow;
+  border-style: groove;
+  border-radius: 50px;
+  padding: 20px;
+  margin: 20px;
+}
+
+/* Style for the labels within the box */
+h3.fcolor, label.fcolor {
+  color: rgb(157, 0, 255);
+}
+
+/* Style for all the buttons */
+.button {
+  background-color: greenyellow;
+  color: black;
+}
+/* Style for all the buttons hover*/
+.button:hover {
+  color: black;
+  background-color: green;
+}
+/* Style for all the buttons focus (when clicked)*/
+.button:focus{
+  color: greenyellow;
+  background-color: black;
+}
+
+.options{  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;}
+/* Style for the text at the bottom of the box*/
+div.subtitle {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  color: greenyellow;
+}
