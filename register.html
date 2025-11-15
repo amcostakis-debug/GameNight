@@ -1,82 +1,130 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-	<meta charset="UTF-8">  
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">  
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">     
-    <link rel="stylesheet" type="text/css" href="style.css">  
-    <title>GAME NIGHT | Login</title>  
-</head>  
-<body>   
-  <div id="background">   
-    <div class="section">   
-        <div class="container">   
-          <div class="nav">   
-            <ul>   
-              <li><a href="register.html">Home</a></li>  
-              <li><a href="login.html">Login</a></li>  
-              <li><a href="character.html">Character</a></li>  
-              <li><a href="method.html">Method</a></li>    
-              <div class="icon">   
-                <li class="icon"><a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>   
-                <li class="icon"><a href="https://www.instagram.com/" target="_blank"><i class="fa fa-instagram fa-lg" aria-hidden="true"></i></a></li>   
-              </div>   
-            </ul>   
-         </div>   
-        </div>   
-      </div>    
-      <hr>   
-    <div class="container">   
-      <h1 class="block title is-2 has-text-centered fcolor"><a class="to-home" href="register.html">   
-      WELCOME TO GAME NIGHT   
-     </a></h1>  
-     
-     <h1 class="block title is-3 has-text-centered fcolor">   
-      Where Gamers Find Their Player Two (or Twenty). </h1>           
+<!DOCTYPE html>
+<html lang="en">
 
-     </div>   
-    <div> <a class="center-block" href="register.html">  
-      <input type="image" src="images/GameNight.png" alt="Game Night Logo" class="logo"> 
-    </a></div>   
-    <div class="section container">         
-        <form class="box" style="max-width:500px;margin:auto;" action="#login">   
-          <h3 class="title is-3 has-text-centered fcolor">Match. Chat. Play.</h3>   
-          <h3 class="title is-3 has-text-centered fcolor">Ready Up:</h3><hr>   
-     <div class="field">       
-            <label class="label fcolor">Name</label>     
-            <div class="control">     
-              <input type="text" class="input" name="userName">   
-            </div>   
-          </div>   
-          <div class="field">       
-            <label class="label fcolor">Email</label>     
-            <div class="control">     
-              <input type="text" class="input" name="userEmail">   
-            </div>   
-          </div>   
-          <div class="field">   
-          <label class="label fcolor">Password</label>   
-          <div class="control">   
-            <input type="text" class="input" name="userPw">     
-          </div>   
-          </div>   
-         <div class="field">   
-            <label class="label fcolor">Confirm Password</label>   
-          <div class="control">   
-              <input type="text" class="input" name="confirmPw">     
-            </div>   
-            </div>   
-          <div class="field">   
-           <input class="button" type="submit" value="Let's Play!">     
-          </div>   
-        </form>   
-        <div class="subtitle has-text-centered">   
-          <p>Already Playing? Login Now!</p><br/>   
-          <button class="button" onclick="window.location.href='login.html';">Login to your Game Night Account</button>   
-        </div>    
-    </div>   
-    <div style="padding-bottom:100px;"></div>   
-  </div>     
-</body>   
-</html>   
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bulma & Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+  <title>GAME NIGHT | Register</title>
+</head>
+
+<body>
+  <div id="background">
+
+    <!-- NAVIGATION -->
+    <section class="section">
+      <div class="container">
+        <nav class="nav">
+          <ul>
+            <li><a href="register.html">Home</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="character.html">Character</a></li>
+            <li><a href="method.html">Method</a></li>
+
+            <!-- Social Icons -->
+            <li class="icon">
+              <a href="https://www.facebook.com/" target="_blank">
+                <i class="fa fa-facebook fa-lg"></i>
+              </a>
+            </li>
+            <li class="icon">
+              <a href="https://www.instagram.com/" target="_blank">
+                <i class="fa fa-instagram fa-lg"></i>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- PAGE HEADERS -->
+    <div class="container">
+      <h1 class="block title is-2 has-text-centered fcolor">
+        <a class="to-home" href="register.html">WELCOME TO GAME NIGHT</a>
+      </h1>
+
+      <h1 class="block title is-3 has-text-centered fcolor">
+        Where Gamers Find Their Player Two (or Twenty).
+      </h1>
+    </div>
+
+    <!-- LOGO IMAGE -->
+    <div class="has-text-centered">
+      <a href="register.html">
+        <img src="images/GameNight.png" alt="Game Night Logo" class="logo">
+      </a>
+    </div>
+
+    <!-- REGISTRATION FORM -->
+    <section class="section container">
+      <form id="registerForm" class="box" style="max-width:500px; margin:auto;" action="#login">
+
+        <h3 class="title is-3 has-text-centered fcolor">Match. Chat. Play.</h3>
+        <h3 class="title is-3 has-text-centered fcolor">Ready Up:</h3>
+        <hr>
+
+        <!-- Name -->
+        <div class="field">
+          <label class="label fcolor">Name</label>
+          <div class="control">
+            <input id="userName" type="text" class="input" name="userName" required>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="field">
+          <label class="label fcolor">Email</label>
+          <div class="control">
+            <input id="userEmail" type="email" class="input" name="userEmail" required>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="field">
+          <label class="label fcolor">Password</label>
+          <div class="control">
+            <input id="userPw" type="password" class="input" name="userPw" required>
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="field">
+          <label class="label fcolor">Confirm Password</label>
+          <div class="control">
+            <input id="confirmPw" type="password" class="input" name="confirmPw" required>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="field">
+          <input class="button is-primary is-fullwidth" type="submit" value="Let's Play!">
+        </div>
+      </form>
+
+      <!-- Already Registered Section -->
+      <div class="subtitle has-text-centered">
+        <p>Already Playing? Login Now!</p><br>
+        <button class="button is-info" onclick="window.location.href='login.html';">
+          Login to your Game Night Account
+        </button>
+      </div>
+    </section>
+
+    <div style="padding-bottom:100px;"></div>
+
+  </div>
+
+  <!-- Your JS File -->
+  <script src="register.js"></script>
+</body>
+
+</html>

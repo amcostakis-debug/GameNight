@@ -32,35 +32,48 @@
         WELCOME TO GAME NIGHT  
       </a></h1>   
     </div>  
-    <div>  <a class="to-home" href="register.html"> 
-      <input type="image" src="images/GameNight.png" alt="Game Night Logo" class="logo"> 
-    </a></div>  
-   <div class="section container">        
-    <form class="box" style="max-width:500px;margin:auto;" action="#login">  
-          <h3 class="title is-3 has-text-centered fcolor">Match. Chat. Play.</h3>  
-          <h3 class="title is-3 has-text-centered fcolor">Ready Up:</h3><hr>  
+    <div>  
+      <a class="to-home" href="register.html"> 
+        <input type="image" src="images/GameNight.png" alt="Game Night Logo" class="logo"> 
+      </a>
+    </div>  
+    
+    <div class="section container">        
+      <!-- UPDATED: ADDED id="login-form" -->
+      <form id="login-form" class="box" style="max-width:500px;margin:auto;" action="#login">  
+        <h3 class="title is-3 has-text-centered fcolor">Match. Chat. Play.</h3>  
+        <h3 class="title is-3 has-text-centered fcolor">Ready Up:</h3><hr>  
+        
         <div class="field">      
-            <label class="label fcolor">Email</label>    
-            <div class="control">    
-              <input type="text" class="input" name="userEmail">  
-            </div>  
+          <label class="label fcolor">Email</label>    
+          <div class="control">    
+            <input type="text" class="input" name="userEmail">  
+          </div>  
         </div>  
+        
         <div class="field">  
-        <label class="label fcolor">Password</label>  
-        <div class="control">  
-           <input type="text" class="input" name="userPw">    
+          <label class="label fcolor">Password</label>  
+          <div class="control">  
+            <input type="text" class="input" name="userPw">    
           </div>  
         </div>  
-          <div class="field">  
-            <input class="button" type="submit" value="Let's Play">    
-          </div>  
-       </form>  
-<div class="subtitle has-text-centered">  
-          <p>First Time Loading In? Join Game Night Today!</p><br/>  
-		<button class="button" onclick="window.location.href='register.html';">Register Game Night Account</button>  
-        </div>   
+        
+        <div class="field">  
+          <input class="button" type="submit" value="Let's Play">    
+        </div>  
+      </form>  
+      
+      <div class="subtitle has-text-centered">  
+        <p>First Time Loading In? Join Game Night Today!</p><br/>  
+        <button class="button" onclick="window.location.href='register.html';">Register Game Night Account</button>  
+      </div>   
    </div>  
-    <div style="padding-bottom:100px;"></div>  
+   
+   <div style="padding-bottom:100px;"></div>  
   </div>    
+
+  <!-- Add the JS file -->
+  <script src="login.js"></script>
+
 </body>  
-</html>  
+</html>
