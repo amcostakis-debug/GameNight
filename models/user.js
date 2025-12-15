@@ -1,74 +1,85 @@
-// 1. import con to access database
-const con = require("./db_connect")
-// 2. create function that creates entity table if doesn't exist already
-async function createUserTable() {
-  let sql = `
-    CREATE TABLE IF NOT EXISTS User (
-      UserID INT NOT NULL AUTO_INCREMENT,
-      Username VARCHAR(255) NOT NULL UNIQUE,
-      Email VARCHAR(255) NOT NULL UNIQUE,
-      Password VARCHAR(255) NOT NULL,
-      CONSTRAINT userPK PRIMARY KEY(userID)
-    );
-  `
-  await con.query(sql)
-}
-// 3. call function that creates table
-createUserTable()
+const mysql = require('mysql2');
+require('dotenv').config();
 
-// 4. create CRUD functions
-// READ for grabbing all users
-async function getAllUsers() {
-  let sql = `
-    SELECT * FROM User;
-  `
-  return await con.query(sql)
-}
+// Create MySQL connection
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
+});
 
-/* Eventually will add all CRUD operations:
-Create: Register function
-Read: Login function
-*/
+// ------------------- Table Creation -------------------
+const createUsersTable = `
+CREATE TABLE IF NOT EXISTS users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    date_of_birth DATE,
+    gender VARCHAR(10),
+    city VARCHAR(50),
+    country VARCHAR(50),
+    bio TEXT,
+    join_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+`;
 
-// let user = {
-//   username: "cathy123",
-//   password: "icecream"
-// }
-async function userExists(user) {
-  let sql = `
-      SELECT * FROM User
-      WHERE Username="${user.username}"
-  `
-  let cuser = await con.query(sql)
-  return cuser[0]
-}
+connection.query(createUsersTable, (err) => {
+  if (err) throw err;
+  console.log('Users table ready');
+});
 
-async function login(user) {
-  let cuser = await userExists(user)
-  if(!cuser) throw Error("Username does not exist!")
-  if(user.password !== cuser.Password) throw Error("Password incorrect!")
+// ------------------- CRUD Functions -------------------
 
-  return cuser
+// CREATE a new user
+function createUser(user, callback) {
+  const sql = `
+    INSERT INTO users 
+    (username, email, password, date_of_birth, gender, city, country, bio) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+  const params = [
+    user.username, user.email, user.password, user.date_of_birth,
+    user.gender, user.city, user.country, user.bio
+  ];
+  connection.query(sql, params, (err, results) => callback(err, results));
 }
 
-// CREATE - Register
-async function register(user) {
-  let cuser = await userExists(user)
-  if(cuser) throw Error("Username already in use!")
-  
-  let sql = `
-    INSERT INTO user(Username, Password, Email)
-    VALUES("${user.username}", "${user.password}", "${user.email}")
-  `  
-  await con.query(sql)
-
-  return await userExists(user)
+// READ all users
+function getAllUsers(callback) {
+  connection.query('SELECT * FROM users', (err, results) => callback(err, results));
 }
-/*
-Update: Update password/name function
-Delete: Delete user account function*/
 
-/* We need to add each function we create to "module.exports", or 
-   else cannot access the functions in our route files*/
-// 5. export all functions so accessible by corresponding route file
-module.exports = { getAllUsers, login, register }
+// READ a single user by ID
+function getUserById(userId, callback) {
+  connection.query('SELECT * FROM users WHERE user_id = ?', [userId], (err, results) => callback(err, results[0]));
+}
+
+// UPDATE a user by ID
+function updateUser(userId, user, callback) {
+  const sql = `
+    UPDATE users 
+    SET username=?, email=?, password=?, date_of_birth=?, gender=?, city=?, country=?, bio=? 
+    WHERE user_id=?
+  `;
+  const params = [
+    user.username, user.email, user.password, user.date_of_birth,
+    user.gender, user.city, user.country, user.bio, userId
+  ];
+  connection.query(sql, params, (err, results) => callback(err, results));
+}
+
+// DELETE a user by ID
+function deleteUser(userId, callback) {
+  connection.query('DELETE FROM users WHERE user_id = ?', [userId], (err, results) => callback(err, results));
+}
+
+// Export CRUD functions
+module.exports = {
+  createUser,
+  getAllUsers,
+  getUserById,
+  updateUser,
+  deleteUser
+};

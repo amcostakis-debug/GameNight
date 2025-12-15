@@ -4,7 +4,7 @@ const con = mysql.createPool({
   host: "localhost",
   user: "root",
   password: "MyNewPass123!",  // the password you set
-  database: "cps553_assignment5" // the database you just created
+  database: "my_project_db" // the database you just created
 });
 
 module.exports = con;
