@@ -1,45 +1,46 @@
 <!DOCTYPE html>  
 <html lang="en">  
 <head>  
-	<meta charset="UTF-8">  
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">  
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">     
-    <link rel="stylesheet" type="text/css" href="style.css">  
-    <title>GAME NIGHT | Login</title>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">     
+  <link rel="stylesheet" type="text/css" href="style.css">  
+  <title>GAME NIGHT | Login</title>  
 </head>  
 <body>  
   <div id="background">  
     <div class="section">  
-        <div class="container">  
-          <div class="nav">  
-            <ul>  
-              <li><a href="register.html">Home</a></li>  
-              <li><a href="login.html">Login</a></li>  
-              <li><a href="character.html">Character</a></li>  
-              <li><a href="method.html">Method</a></li>   
-              <div class="icon">  
-                <li class="icon"><a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>  
-                <li class="icon"><a href="https://www.instagram.com/" target="_blank"><i class="fa fa-instagram fa-lg" aria-hidden="true"></i></a></li>  
-              </div>  
-            </ul>  
-         </div>  
+      <div class="container">  
+        <div class="nav">  
+          <ul>  
+            <li><a href="register.html">Home</a></li>  
+            <li><a href="login.html">Login</a></li>  
+            <li><a href="character.html">Character</a></li>  
+            <li><a href="method.html">Method</a></li>   
+            <div class="icon">  
+              <li class="icon"><a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>  
+              <li class="icon"><a href="https://www.instagram.com/" target="_blank"><i class="fa fa-instagram fa-lg" aria-hidden="true"></i></a></li>  
+            </div>  
+          </ul>  
         </div>  
-      </div>   
-      <hr>  
+      </div>  
+    </div>   
+    <hr>  
+
     <div class="container">  
-      <h1 class="block title is-2 has-text-centered fcolor"><a class="to-home" href="login.html">  
-        WELCOME TO GAME NIGHT  
-      </a></h1>   
+      <h1 class="block title is-2 has-text-centered fcolor">
+        <a class="to-home" href="login.html">WELCOME TO GAME NIGHT</a>
+      </h1>   
     </div>  
+
     <div>  
       <a class="to-home" href="register.html"> 
         <input type="image" src="images/GameNight.png" alt="Game Night Logo" class="logo"> 
       </a>
     </div>  
-    
+
     <div class="section container">        
-      <!-- UPDATED: ADDED id="login-form" -->
       <form id="login-form" class="box" style="max-width:500px;margin:auto;" action="#login">  
         <h3 class="title is-3 has-text-centered fcolor">Match. Chat. Play.</h3>  
         <h3 class="title is-3 has-text-centered fcolor">Ready Up:</h3><hr>  
@@ -47,33 +48,61 @@
         <div class="field">      
           <label class="label fcolor">Email</label>    
           <div class="control">    
-            <input type="text" class="input" name="userEmail">  
+            <input id="userEmail" type="email" class="input" name="userEmail" required>  
           </div>  
         </div>  
         
         <div class="field">  
           <label class="label fcolor">Password</label>  
           <div class="control">  
-            <input type="text" class="input" name="userPw">    
+            <input id="userPw" type="password" class="input" name="userPw" required>    
           </div>  
         </div>  
         
         <div class="field">  
-          <input class="button" type="submit" value="Let's Play">    
+          <input class="button is-primary is-fullwidth" type="submit" value="Let's Play">    
         </div>  
       </form>  
       
       <div class="subtitle has-text-centered">  
         <p>First Time Loading In? Join Game Night Today!</p><br/>  
-        <button class="button" onclick="window.location.href='register.html';">Register Game Night Account</button>  
+        <button class="button is-info" onclick="window.location.href='register.html';">Register Game Night Account</button>  
       </div>   
-   </div>  
+    </div>  
    
-   <div style="padding-bottom:100px;"></div>  
+    <div style="padding-bottom:100px;"></div>  
   </div>    
 
-  <!-- Add the JS file -->
-  <script src="login.js"></script>
+  <!-- Functional JS -->
+  <script>
+    const form = document.getElementById('login-form');
 
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('userEmail').value.trim();
+      const password = document.getElementById('userPw').value;
+
+      try {
+        // Fetch all users to validate login (or use a dedicated /login route if available)
+        const response = await fetch('http://localhost:3000/users');
+        const users = await response.json();
+
+        const user = users.find(u => u.email === email && u.password === password);
+
+        if (user) {
+          // Save user info in localStorage
+          localStorage.setItem('user', JSON.stringify({ id: user.user_id, username: user.username }));
+          // Redirect to game form page
+          window.location.href = 'gameForm.html';
+        } else {
+          alert('Invalid email or password');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('An error occurred. Please try again.');
+      }
+    });
+  </script>
 </body>  
 </html>

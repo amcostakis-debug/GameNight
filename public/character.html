@@ -1,92 +1,78 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">  
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">     
-    <link rel="stylesheet" type="text/css" href="style.css">  
-    <title>GAME NIGHT | Character Select</title>  
-</head>  
-<body>  
-<div id="background">  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+  <title>Game Night | Your Games</title>
+</head>
 
-    <!-- NAVIGATION -->
-    <div class="section">  
-        <div class="container">  
-          <div class="nav">  
-            <ul>  
-              <li><a href="register.html">Home</a></li>  
-              <li><a href="login.html">Login</a></li>  
-              <li><a href="character.html">Character</a></li>  
-              <li><a href="method.html">Method</a></li>   
+<body>
+<div class="section container">
 
-              <li class="icon">
-                <a href="https://www.facebook.com/" target="_blank">
-                  <i class="fa fa-facebook fa-lg"></i>
-                </a>
-              </li>  
-              <li class="icon">
-                <a href="https://www.instagram.com/" target="_blank">
-                  <i class="fa fa-instagram fa-lg"></i>
-                </a>
-              </li>
-            </ul>  
-          </div>  
-        </div>  
-    </div>   
+  <h1 class="title has-text-centered">Your Games</h1>
 
-    <hr>
+  <!-- CREATE GAME -->
+  <form id="gameForm" class="box">
+    <input id="gameName" class="input" placeholder="Enter game name" required>
+    <br><br>
+    <button class="button is-primary is-fullwidth">Create Game</button>
+  </form>
 
-    <!-- HEADER TITLE -->
-    <div class="container">   
-      <h1 class="block title is-2 has-text-centered fcolor">
-        <a class="to-home" href="register.html">WELCOME TO GAME NIGHT</a>
-      </h1>  
-    </div>  
+  <!-- DISPLAY GAMES -->
+  <div id="gamesList"></div>
 
-    <!-- LOGO -->
-    <div class="has-text-centered">
-      <a class="to-home" href="register.html"> 
-        <input type="image" src="images/GameNight.png" alt="Game Night Logo" class="logo"> 
-      </a>
-    </div>  
+</div>
 
-    <!-- CHARACTER SELECTION FORM -->
-    <div class="options">         
-      <form id="character-form" class="box" style="max-width:500px;margin:auto;">   
-        <h3 class="title is-3 fcolor">Choose your character:</h3>       
+<script>
+  // ------------------ LOGIN CHECK ------------------
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (!user) {
+    alert('Please login first');
+    window.location.href = 'login.html';
+  }
 
-        <div class="field characters">   
-          <img src="images/MalePlayer.png" alt="Male Player" data-character="male">
-          <img src="images/FemalePlayer.png" alt="Female Player" data-character="female">
-        </div>   
+  const gamesList = document.getElementById('gamesList');
 
-        <div class="field characters">   
-          <img src="images/NonBiPlayer.png" alt="Nonbinary Player" data-character="nonbinary">
-          <img src="images/OtherPlayer.png" alt="Other Character" data-character="other">
-        </div>            
+  // ------------------ LOAD ALL USER GAMES ------------------
+  async function loadUserGames() {
+    const res = await fetch(`http://localhost:3000/games/user/${user.id}`);
+    const games = await res.json();
 
-        <div class="field">  
-          <label class="label fcolor">Custom or more info here:</label>  
-          <div class="control">  
-            <input type="text" class="input" name="customCharacter">    
-          </div>  
-        </div>  
+    gamesList.innerHTML = '';
 
-        <div class="subtitle">   
-          <button class="button" type="button" onclick="window.location.href='method.html'">
-            Continue
-          </button>   
-        </div>    
-      </form>   
-    </div>   
+    games.forEach(game => {
+      const div = document.createElement('div');
+      div.className = 'box';
+      div.textContent = game.name;
+      gamesList.appendChild(div);
+    });
+  }
 
-    <div style="padding-bottom:100px;"></div>   
+  // ------------------ CREATE GAME ------------------
+  document.getElementById('gameForm').addEventListener('submit', async e => {
+    e.preventDefault();
 
-</div>     
+    const name = document.getElementById('gameName').value;
 
-<!-- Character JS -->
-<script src="character.js"></script>
-</body>   
+    await fetch('http://localhost:3000/games', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        user_id: user.id
+      })
+    });
+
+    document.getElementById('gameName').value = '';
+
+    // 🔥 THIS IS THE KEY REQUIREMENT
+    loadUserGames();
+  });
+
+  // ------------------ AUTO LOAD ON PAGE OPEN ------------------
+  loadUserGames();
+</script>
+
+</body>
 </html>

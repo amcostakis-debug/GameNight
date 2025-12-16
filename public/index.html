@@ -89,7 +89,42 @@
 </div>    
 
 <!-- METHOD JS -->
-<script src="method.js"></script>
+<script>
+  // Ensure a user is logged in
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (!user) {
+    alert('Please login first!');
+    window.location.href = 'login.html';
+  }
+
+  // Handle method selection
+  const buttons = document.querySelectorAll('#method-form button');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const selectedMethod = btn.getAttribute('data-method');
+      console.log('Selected method:', selectedMethod);
+
+      // Option 1: store locally
+      localStorage.setItem('preferredMethod', selectedMethod);
+
+      // Option 2: send to backend (if your users table has preferred_method column)
+      try {
+        const response = await fetch(`http://localhost:3000/users/${user.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ preferred_method: selectedMethod })
+        });
+        if (!response.ok) throw new Error('Failed to save method');
+      } catch (err) {
+        console.warn('Could not save to backend, saved locally instead.', err);
+      }
+
+      alert(`You selected "${selectedMethod}"!`);
+      // Redirect to next step, e.g., character form
+      window.location.href = 'character.html';
+    });
+  });
+</script>
 
 </body>  
 </html>

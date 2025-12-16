@@ -123,8 +123,54 @@
 
   </div>
 
-  <!-- Your JS File -->
-  <script src="register.js"></script>
+  <!-- JS to make form functional -->
+  <script>
+    const form = document.getElementById('registerForm');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Get form values
+      const username = document.getElementById('userName').value.trim();
+      const email = document.getElementById('userEmail').value.trim();
+      const password = document.getElementById('userPw').value;
+      const confirmPw = document.getElementById('confirmPw').value;
+
+      if (password !== confirmPw) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      const userData = {
+        username,
+        email,
+        password
+      };
+
+      try {
+        const response = await fetch('http://localhost:3000/users', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(userData)
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Save user info in localStorage
+          localStorage.setItem('user', JSON.stringify({ id: data.id, username }));
+
+          // Redirect to second entity form (gameForm.html)
+          window.location.href = 'gameForm.html';
+        } else {
+          alert(data.error || 'Registration failed.');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('An error occurred. Please try again.');
+      }
+    });
+  </script>
 </body>
 
 </html>
